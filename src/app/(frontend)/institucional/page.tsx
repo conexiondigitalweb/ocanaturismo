@@ -56,7 +56,8 @@ export default function InstitucionalPage() {
               <div>
                 <h3 className="font-semibold text-gray-800 mb-3">Contacto</h3>
                 <address className="not-italic text-gray-600 space-y-2 text-sm">
-                  <p><strong>Secretaria (E):</strong> Ibeth Karina Claro Sabbagh</p>
+                  <p><strong>Secretario:</strong> Doiler Alfonso Sanjuán Sánchez</p>
+                  <p><strong>Coordinación Cultura y Turismo:</strong> Jazmine Beatriz Ibáñez Lozano</p>
                   <p><strong>Dependencia:</strong> Secretaría de Educación, Cultura y Turismo</p>
                   <p><strong>Ubicación:</strong> Complejo Histórico de la Gran Convención</p>
                   <p>Calle 11 con Carrera 9, Barrio San Francisco</p>
@@ -84,10 +85,9 @@ export default function InstitucionalPage() {
             el principal destino turístico del departamento Norte de Santander en el horizonte 2034.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
             {[
-              { label: 'Formulador', valor: 'Freider Avendaño Jácome' },
-              { label: 'Alcalde', valor: 'Samir Fernando Casadiego Sanjuan' },
+              { label: 'Alcalde vigente', valor: 'Emiro Cañizares Plata' },
               { label: 'Horizonte', valor: '2023-2034' },
             ].map((d) => (
               <div key={d.label} className="bg-terracota-50 rounded-xl p-4 border border-terracota-100">
