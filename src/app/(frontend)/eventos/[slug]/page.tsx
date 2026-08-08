@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
+import YouTubeEmbed from '@/components/ui/YouTubeEmbed'
 import type { Evento } from '@/payload-types'
 
 interface Props {
@@ -77,10 +78,25 @@ export default async function EventoPage({ params }: Props) {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-8">
             {evento.descripcion && (
               <div className="prose prose-gray max-w-none text-gray-600">
                 <RichTextRenderer content={evento.descripcion as Record<string, unknown>} />
+              </div>
+            )}
+
+            {/* Videos (debajo de la galería de imágenes) */}
+            {evento.videos && evento.videos.length > 0 && (
+              <div>
+                <h2 className="font-display text-2xl font-bold text-gray-800 mb-4">Videos</h2>
+                <div className="space-y-6">
+                  {evento.videos.map((v, i) => (
+                    <div key={i}>
+                      <YouTubeEmbed url={v.url} titulo={v.titulo} />
+                      {v.titulo && <p className="mt-2 text-sm text-gray-500">{v.titulo}</p>}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>

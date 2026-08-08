@@ -71,7 +71,13 @@ export default buildConfig({
       ? [
           vercelBlobStorage({
             collections: {
-              media: true,
+              media: {
+                // Las imágenes se sirven directo desde el CDN de Blob
+                // (*.public.blob.vercel-storage.com) en vez de proxearlas
+                // por /api/media/file/... — Medios es de lectura pública,
+                // no hay control de acceso que perder al saltarse el proxy.
+                disablePayloadAccessControl: true,
+              },
             },
             token: process.env.BLOB_READ_WRITE_TOKEN,
           }),

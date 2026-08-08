@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
+import YouTubeEmbed from '@/components/ui/YouTubeEmbed'
 import type { Atractivo } from '@/payload-types'
 
 const categoryLabel: Record<string, string> = {
@@ -91,6 +92,21 @@ export default async function AtractivoPage({ params }: Props) {
                 <h2 className="font-display text-2xl font-bold text-gray-800 mb-4">Descripción</h2>
                 <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed">
                   <RichTextRenderer content={atractivo.descripcion} />
+                </div>
+              </div>
+            )}
+
+            {/* Videos (debajo de la galería de imágenes) */}
+            {atractivo.videos && atractivo.videos.length > 0 && (
+              <div>
+                <h2 className="font-display text-2xl font-bold text-gray-800 mb-4">Videos</h2>
+                <div className="space-y-6">
+                  {atractivo.videos.map((v, i) => (
+                    <div key={i}>
+                      <YouTubeEmbed url={v.url} titulo={v.titulo} />
+                      {v.titulo && <p className="mt-2 text-sm text-gray-500">{v.titulo}</p>}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

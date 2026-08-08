@@ -67,6 +67,7 @@ export interface Atractivo {
   descripcion?: Record<string, unknown> | null
   imagenPrincipal?: Media | string | null
   imagenes?: Array<{ imagen: Media | string; id?: string | null }> | null
+  videos?: Array<{ url: string; titulo?: string | null; id?: string | null }> | null
   ubicacion?: string | null
   coordenadas?: {
     latitud?: number | null
@@ -106,6 +107,7 @@ export interface Evento {
   slug: string
   descripcion?: Record<string, unknown> | null
   imagen?: Media | string | null
+  videos?: Array<{ url: string; titulo?: string | null; id?: string | null }> | null
   fechaInicio: string
   fechaFin?: string | null
   lugar?: string | null

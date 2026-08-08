@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isLoggedIn } from '@/access'
 import { restrictPublishToAdmin } from './hooks/restrictPublish'
+import { isValidYouTubeUrl } from '@/lib/youtube'
 
 export const Atractivos: CollectionConfig = {
   slug: 'atractivos',
@@ -85,6 +86,38 @@ export const Atractivos: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
           required: true,
+        },
+      ],
+    },
+    {
+      name: 'videos',
+      type: 'array',
+      label: 'Videos',
+      labels: { singular: 'Video', plural: 'Videos' },
+      admin: {
+        description: 'Videos de YouTube del atractivo (se muestran debajo de la galería de imágenes).',
+      },
+      fields: [
+        {
+          name: 'url',
+          type: 'text',
+          label: 'URL de YouTube',
+          required: true,
+          validate: (value: string | null | undefined) => {
+            if (!value) return 'La URL es obligatoria'
+            if (!isValidYouTubeUrl(value)) {
+              return 'Debe ser un enlace válido de YouTube (youtube.com/watch, youtu.be o youtube.com/embed)'
+            }
+            return true
+          },
+        },
+        {
+          name: 'titulo',
+          type: 'text',
+          label: 'Título / descripción corta',
+          admin: {
+            description: 'Para accesibilidad (title del iframe). Opcional.',
+          },
         },
       ],
     },
