@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isLoggedIn } from '@/access'
+import { restrictPublishToAdmin } from './hooks/restrictPublish'
 
 export const Eventos: CollectionConfig = {
   slug: 'eventos',
@@ -6,6 +8,15 @@ export const Eventos: CollectionConfig = {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'tipo', 'fechaInicio', 'destacado', 'estado'],
     description: 'Agenda de eventos culturales y turísticos de Ocaña',
+  },
+  access: {
+    read: () => true,
+    create: isLoggedIn,
+    update: isLoggedIn,
+    delete: isAdmin,
+  },
+  hooks: {
+    beforeChange: [restrictPublishToAdmin],
   },
   fields: [
     {
@@ -93,8 +104,12 @@ export const Eventos: CollectionConfig = {
       type: 'select',
       label: 'Estado',
       defaultValue: 'borrador',
+      admin: {
+        description: 'Solo un administrador puede pasar el estado a "Publicado".',
+      },
       options: [
         { label: 'Borrador', value: 'borrador' },
+        { label: 'En revisión', value: 'revision' },
         { label: 'Publicado', value: 'publicado' },
       ],
     },

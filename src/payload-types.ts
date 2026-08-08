@@ -22,7 +22,7 @@ export interface Usuario {
   id: string
   email: string
   nombre?: string | null
-  rol?: 'admin' | 'editor' | null
+  rol: 'admin' | 'colaborador'
   updatedAt: string
   createdAt: string
 }
@@ -31,14 +31,32 @@ export interface Media {
   id: string
   alt: string
   credito?: string | null
+  updatedAt: string
+  createdAt: string
+  url?: string | null
+  thumbnailURL?: string | null
   filename?: string | null
   mimeType?: string | null
   filesize?: number | null
   width?: number | null
   height?: number | null
+  focalX?: number | null
+  focalY?: number | null
+  sizes?: {
+    thumbnail?: MediaSize | null
+    card?: MediaSize | null
+    hero?: MediaSize | null
+    gallery?: MediaSize | null
+  }
+}
+
+interface MediaSize {
   url?: string | null
-  updatedAt: string
-  createdAt: string
+  width?: number | null
+  height?: number | null
+  mimeType?: string | null
+  filesize?: number | null
+  filename?: string | null
 }
 
 export interface Atractivo {
@@ -60,7 +78,7 @@ export interface Atractivo {
   declaratoria?: string | null
   puntaje?: number | null
   destacado?: boolean | null
-  estado?: 'borrador' | 'publicado' | null
+  estado?: 'borrador' | 'revision' | 'publicado' | null
   orden?: number | null
   updatedAt: string
   createdAt: string
@@ -77,7 +95,7 @@ export interface Ruta {
   dificultad?: 'baja' | 'media' | 'alta' | null
   distancia?: string | null
   destacado?: boolean | null
-  estado?: 'borrador' | 'publicado' | null
+  estado?: 'borrador' | 'revision' | 'publicado' | null
   updatedAt: string
   createdAt: string
 }
@@ -94,7 +112,7 @@ export interface Evento {
   tipo?: 'cultural' | 'religioso' | 'deportivo' | 'gastronomico' | 'folclorico' | 'otro' | null
   organizador?: string | null
   destacado?: boolean | null
-  estado?: 'borrador' | 'publicado' | null
+  estado?: 'borrador' | 'revision' | 'publicado' | null
   updatedAt: string
   createdAt: string
 }

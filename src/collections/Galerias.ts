@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/access'
 
 export const Galerias: CollectionConfig = {
   slug: 'galerias',
@@ -6,6 +7,12 @@ export const Galerias: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'estado'],
     description: 'Galerías fotográficas del municipio',
+  },
+  access: {
+    read: () => true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isLoggedIn } from '@/access'
+import { restrictPublishToAdmin } from './hooks/restrictPublish'
 
 export const Atractivos: CollectionConfig = {
   slug: 'atractivos',
@@ -6,6 +8,15 @@ export const Atractivos: CollectionConfig = {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'categoria', 'puntaje', 'destacado', 'estado'],
     description: 'Atractivos turísticos del municipio de Ocaña',
+  },
+  access: {
+    read: () => true,
+    create: isLoggedIn,
+    update: isLoggedIn,
+    delete: isAdmin,
+  },
+  hooks: {
+    beforeChange: [restrictPublishToAdmin],
   },
   fields: [
     {
@@ -140,8 +151,12 @@ export const Atractivos: CollectionConfig = {
       type: 'select',
       label: 'Estado',
       defaultValue: 'borrador',
+      admin: {
+        description: 'Solo un administrador puede pasar el estado a "Publicado".',
+      },
       options: [
         { label: 'Borrador', value: 'borrador' },
+        { label: 'En revisión', value: 'revision' },
         { label: 'Publicado', value: 'publicado' },
       ],
     },

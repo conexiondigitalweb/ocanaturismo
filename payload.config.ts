@@ -1,6 +1,10 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { es } from '@payloadcms/translations/languages/es'
+import { en } from '@payloadcms/translations/languages/en'
+import sharp from 'sharp'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -24,6 +28,10 @@ export default buildConfig({
       titleSuffix: '— OcanaTurismo Admin',
     },
   },
+  i18n: {
+    fallbackLanguage: 'es',
+    supportedLanguages: { es, en },
+  },
   collections: [
     Usuarios,
     Medios,
@@ -37,6 +45,9 @@ export default buildConfig({
   ],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || 'fallback-secret-cambia-esto',
+  // Requerido para que Payload genere los imageSizes de Medios (recorte,
+  // punto focal y las variantes thumbnail/card/hero/gallery).
+  sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'src/payload-types.ts'),
   },
@@ -47,7 +58,24 @@ export default buildConfig({
   }),
   upload: {
     limits: {
-      fileSize: 10000000,
+      // 15MB — ver colección Medios para el detalle de formatos aceptados.
+      fileSize: 15 * 1024 * 1024,
     },
   },
+  plugins: [
+    // Vercel Blob evita perder los archivos subidos: el filesystem local no
+    // persiste entre invocaciones serverless. Se activa solo si existe el
+    // token, para no romper el desarrollo local antes de provisionar el Blob
+    // Store en Vercel (Storage → Create → Blob).
+    ...(process.env.BLOB_READ_WRITE_TOKEN
+      ? [
+          vercelBlobStorage({
+            collections: {
+              media: true,
+            },
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+          }),
+        ]
+      : []),
+  ],
 })

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/access'
 
 export const Paginas: CollectionConfig = {
   slug: 'paginas',
@@ -6,6 +7,12 @@ export const Paginas: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'slug', 'estado'],
     description: 'Páginas estáticas del sitio',
+  },
+  access: {
+    read: () => true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

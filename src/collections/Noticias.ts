@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/access'
 
 export const Noticias: CollectionConfig = {
   slug: 'noticias',
@@ -6,6 +7,12 @@ export const Noticias: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'categoria', 'fecha', 'destacado', 'estado'],
     description: 'Noticias y blog del portal de turismo',
+  },
+  access: {
+    read: () => true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

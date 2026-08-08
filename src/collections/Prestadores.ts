@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/access'
 
 export const Prestadores: CollectionConfig = {
   slug: 'prestadores',
@@ -6,6 +7,12 @@ export const Prestadores: CollectionConfig = {
     useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'tipo', 'telefono', 'destacado', 'estado'],
     description: 'Directorio de prestadores de servicios turísticos',
+  },
+  access: {
+    read: () => true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {
