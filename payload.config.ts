@@ -27,6 +27,14 @@ export default buildConfig({
     meta: {
       titleSuffix: '— OcanaTurismo Admin',
     },
+    components: {
+      graphics: {
+        // Logo institucional con soporte de tema claro/oscuro.
+        // El ícono pequeño (graphics.Icon) se deja con el default de
+        // Payload — no hay todavía un asset cuadrado adecuado.
+        Logo: '/src/components/admin/Logo#Logo',
+      },
+    },
   },
   i18n: {
     fallbackLanguage: 'es',

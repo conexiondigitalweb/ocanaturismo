@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { isAdmin } from '@/access'
+import { isAdmin, isLoggedIn } from '@/access'
+import { restrictPublishToAdmin } from './hooks/restrictPublish'
 
 export const Galerias: CollectionConfig = {
   slug: 'galerias',
@@ -10,9 +11,13 @@ export const Galerias: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: isAdmin,
-    update: isAdmin,
+    // Admin y colaborador pueden crear/editar; solo admin elimina.
+    create: isLoggedIn,
+    update: isLoggedIn,
     delete: isAdmin,
+  },
+  hooks: {
+    beforeChange: [restrictPublishToAdmin],
   },
   fields: [
     {

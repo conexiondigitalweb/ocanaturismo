@@ -7,6 +7,9 @@ export const Paginas: CollectionConfig = {
     useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'slug', 'estado'],
     description: 'Páginas estáticas del sitio',
+    // Solo admin gestiona Páginas (ver access abajo) — se oculta del menú
+    // lateral para colaborador en vez de mostrar una sección sin acceso.
+    hidden: ({ user }) => user?.rol === 'colaborador',
   },
   access: {
     read: () => true,
