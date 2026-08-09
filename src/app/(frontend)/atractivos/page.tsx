@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import type { Where } from 'payload'
 import { getPayloadClient } from '@/lib/payload'
+import { getMediaUrl } from '@/lib/media'
 import AtractivoCard from '@/components/ui/AtractivoCard'
 import type { Atractivo } from '@/payload-types'
 
@@ -86,6 +87,7 @@ export default async function AtractivosPage({ searchParams }: Props) {
                   slug={a.slug}
                   categoria={a.categoria}
                   puntaje={a.puntaje || undefined}
+                  imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />
               ))}
             </div>

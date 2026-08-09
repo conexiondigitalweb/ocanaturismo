@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPayloadClient } from '@/lib/payload'
+import { getMediaUrl } from '@/lib/media'
 import YouTubeEmbed from '@/components/ui/YouTubeEmbed'
-import type { Atractivo } from '@/payload-types'
+import type { Atractivo, Media } from '@/payload-types'
 
 const categoryLabel: Record<string, string> = {
   'turismo-religioso': 'Turismo Religioso',
@@ -48,6 +50,14 @@ export default async function AtractivoPage({ params }: Props) {
 
   const catLabel = categoryLabel[atractivo.categoria] || atractivo.categoria
 
+  const heroUrl = getMediaUrl(atractivo.imagenPrincipal, 'hero')
+  const heroAlt =
+    (typeof atractivo.imagenPrincipal === 'object' && atractivo.imagenPrincipal?.alt) || atractivo.nombre
+
+  const galeria = (atractivo.imagenes || []).filter(
+    (item): item is { imagen: Media; id?: string | null } => typeof item.imagen === 'object',
+  )
+
   return (
     <>
       {/* Breadcrumb + Hero */}
@@ -76,15 +86,21 @@ export default async function AtractivoPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Main content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Imagen placeholder */}
-            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-terracota-100 to-dorado-100 h-72 flex items-center justify-center">
-              <div className="text-center text-terracota-400">
-                <svg className="w-16 h-16 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-sm">Imagen próximamente</p>
+            {/* Imagen principal */}
+            {heroUrl ? (
+              <div className="relative rounded-2xl overflow-hidden h-72">
+                <Image src={heroUrl} alt={heroAlt} fill priority className="object-cover" />
               </div>
-            </div>
+            ) : (
+              <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-terracota-100 to-dorado-100 h-72 flex items-center justify-center">
+                <div className="text-center text-terracota-400">
+                  <svg className="w-16 h-16 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="text-sm">Imagen próximamente</p>
+                </div>
+              </div>
+            )}
 
             {/* Descripción */}
             {atractivo.descripcion && (
@@ -92,6 +108,30 @@ export default async function AtractivoPage({ params }: Props) {
                 <h2 className="font-display text-2xl font-bold text-gray-800 mb-4">Descripción</h2>
                 <div className="prose prose-gray max-w-none text-gray-600 leading-relaxed">
                   <RichTextRenderer content={atractivo.descripcion} />
+                </div>
+              </div>
+            )}
+
+            {/* Galería de imágenes */}
+            {galeria.length > 0 && (
+              <div>
+                <h2 className="font-display text-2xl font-bold text-gray-800 mb-4">Galería</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {galeria.map((item, i) => {
+                    const url = getMediaUrl(item.imagen, 'gallery')
+                    if (!url) return null
+                    const alt = item.imagen.alt || atractivo.nombre
+                    return (
+                      <div key={item.id || i} className="relative aspect-square rounded-xl overflow-hidden">
+                        <Image
+                          src={url}
+                          alt={alt}
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}

@@ -1,6 +1,11 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isLoggedIn } from '@/access'
 import { restrictPublishToAdmin } from './hooks/restrictPublish'
+import { makeRevalidateAfterChange, makeRevalidateAfterDelete } from './hooks/revalidate'
+
+// Rutas aparece en el home ("Rutas Turísticas") y en su propio listado
+// estático /rutas (/rutas/[slug] ya es dinámica).
+const revalidatePaths = ['/', '/rutas']
 
 export const Rutas: CollectionConfig = {
   slug: 'rutas',
@@ -17,6 +22,8 @@ export const Rutas: CollectionConfig = {
   },
   hooks: {
     beforeChange: [restrictPublishToAdmin],
+    afterChange: [makeRevalidateAfterChange(revalidatePaths)],
+    afterDelete: [makeRevalidateAfterDelete(revalidatePaths)],
   },
   fields: [
     {

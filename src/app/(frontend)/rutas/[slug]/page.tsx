@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
+import { getMediaUrl } from '@/lib/media'
 import AtractivoCard from '@/components/ui/AtractivoCard'
 import type { Ruta, Atractivo } from '@/payload-types'
 
@@ -92,6 +93,7 @@ export default async function RutaPage({ params }: Props) {
                   slug={a.slug}
                   categoria={a.categoria}
                   puntaje={a.puntaje || undefined}
+                  imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />
               ))}
             </div>

@@ -1,7 +1,12 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isLoggedIn } from '@/access'
 import { restrictPublishToAdmin } from './hooks/restrictPublish'
+import { makeRevalidateAfterChange, makeRevalidateAfterDelete } from './hooks/revalidate'
 import { isValidYouTubeUrl } from '@/lib/youtube'
+
+// Eventos aparece en el home ("Próximos Eventos") y en su propio listado
+// estático /eventos (/eventos/[slug] ya es dinámica).
+const revalidatePaths = ['/', '/eventos']
 
 export const Eventos: CollectionConfig = {
   slug: 'eventos',
@@ -18,6 +23,8 @@ export const Eventos: CollectionConfig = {
   },
   hooks: {
     beforeChange: [restrictPublishToAdmin],
+    afterChange: [makeRevalidateAfterChange(revalidatePaths)],
+    afterDelete: [makeRevalidateAfterDelete(revalidatePaths)],
   },
   fields: [
     {

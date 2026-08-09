@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPayloadClient } from '@/lib/payload'
+import { getMediaUrl } from '@/lib/media'
 import AtractivoCard from '@/components/ui/AtractivoCard'
 import EventoCard from '@/components/ui/EventoCard'
 import RutaCard from '@/components/ui/RutaCard'
@@ -124,6 +125,7 @@ export default async function HomePage() {
                   slug={a.slug}
                   categoria={a.categoria}
                   puntaje={a.puntaje || undefined}
+                  imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />
               ))}
             </div>

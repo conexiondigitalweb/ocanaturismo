@@ -1,7 +1,12 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isLoggedIn } from '@/access'
 import { restrictPublishToAdmin } from './hooks/restrictPublish'
+import { makeRevalidateAfterChange, makeRevalidateAfterDelete } from './hooks/revalidate'
 import { isValidYouTubeUrl } from '@/lib/youtube'
+
+// Atractivos solo aparece en una página estática: la sección "Destacados"
+// del home (/atractivos y /atractivos/[slug] ya son dinámicas).
+const revalidatePaths = ['/']
 
 export const Atractivos: CollectionConfig = {
   slug: 'atractivos',
@@ -18,6 +23,8 @@ export const Atractivos: CollectionConfig = {
   },
   hooks: {
     beforeChange: [restrictPublishToAdmin],
+    afterChange: [makeRevalidateAfterChange(revalidatePaths)],
+    afterDelete: [makeRevalidateAfterDelete(revalidatePaths)],
   },
   fields: [
     {

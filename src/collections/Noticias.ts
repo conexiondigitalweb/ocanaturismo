@@ -1,6 +1,11 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isLoggedIn } from '@/access'
 import { restrictPublishToAdmin } from './hooks/restrictPublish'
+import { makeRevalidateAfterChange, makeRevalidateAfterDelete } from './hooks/revalidate'
+
+// Noticias solo aparece en su propio listado estático /noticias (el home no
+// muestra noticias destacadas, y /noticias/[slug] ya es dinámica).
+const revalidatePaths = ['/noticias']
 
 export const Noticias: CollectionConfig = {
   slug: 'noticias',
@@ -18,6 +23,8 @@ export const Noticias: CollectionConfig = {
   },
   hooks: {
     beforeChange: [restrictPublishToAdmin],
+    afterChange: [makeRevalidateAfterChange(revalidatePaths)],
+    afterDelete: [makeRevalidateAfterDelete(revalidatePaths)],
   },
   fields: [
     {
