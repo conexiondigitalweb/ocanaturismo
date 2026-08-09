@@ -1,3 +1,4 @@
+import '@payloadcms/next/css'
 import { RootLayout } from '@payloadcms/next/layouts'
 import { importMap } from './importMap'
 import { serverAction } from './serverActions'
