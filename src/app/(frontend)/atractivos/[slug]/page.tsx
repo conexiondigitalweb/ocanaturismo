@@ -37,9 +37,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const atractivo = await getAtractivo(slug)
   if (!atractivo) return { title: 'No encontrado' }
+  const catLabels = (atractivo.categorias || []).map((c) => categoryLabel[c] || c)
   return {
     title: atractivo.nombre,
-    description: `Atractivo turístico de Ocaña: ${atractivo.nombre}. Categoría: ${categoryLabel[atractivo.categoria] || atractivo.categoria}.`,
+    description: `Atractivo turístico de Ocaña: ${atractivo.nombre}. Categoría: ${catLabels.join(', ')}.`,
   }
 }
 
@@ -48,7 +49,7 @@ export default async function AtractivoPage({ params }: Props) {
   const atractivo = await getAtractivo(slug)
   if (!atractivo) notFound()
 
-  const catLabel = categoryLabel[atractivo.categoria] || atractivo.categoria
+  const catLabels = (atractivo.categorias || []).map((c) => categoryLabel[c] || c)
 
   const heroUrl = getMediaUrl(atractivo.imagenPrincipal, 'hero')
   const heroAlt =
@@ -72,9 +73,16 @@ export default async function AtractivoPage({ params }: Props) {
           </nav>
         </div>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full mb-4">
-            {catLabel}
-          </span>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {catLabels.map((label) => (
+              <span
+                key={label}
+                className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full"
+              >
+                {label}
+              </span>
+            ))}
+          </div>
           <h1 className="font-display text-3xl md:text-5xl font-bold mb-4">{atractivo.nombre}</h1>
           {atractivo.puntaje && (
             <span className="text-dorado-300 font-semibold">★ Valoración: {atractivo.puntaje}/100</span>

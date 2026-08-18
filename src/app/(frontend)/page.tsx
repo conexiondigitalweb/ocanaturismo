@@ -123,7 +123,7 @@ export default async function HomePage() {
                   key={a.id}
                   nombre={a.nombre}
                   slug={a.slug}
-                  categoria={a.categoria}
+                  categorias={a.categorias || []}
                   puntaje={a.puntaje || undefined}
                   imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />
@@ -269,12 +269,12 @@ export default async function HomePage() {
 
 function AtractivosFallback() {
   const fallback = [
-    { nombre: 'Santuario de Torcoroma', slug: 'santuario-de-nuestra-senora-de-las-gracias-de-torcoroma', categoria: 'turismo-religioso', puntaje: 100 },
-    { nombre: 'Columna Libertad de los Esclavos', slug: 'columna-de-la-libertad-de-los-esclavos', categoria: 'turismo-historico', puntaje: 90 },
-    { nombre: 'Reserva Natural ProAves Torcoroma', slug: 'reserva-natural-proaves-hormiguero-de-torcoroma', categoria: 'turismo-naturaleza', puntaje: 85 },
-    { nombre: 'Complejo Histórico Gran Convención', slug: 'complejo-historico-de-la-gran-convencion', categoria: 'turismo-historico', puntaje: 87 },
-    { nombre: 'Jardín Botánico UFPSO', slug: 'jardin-botanico-jorge-enrique-quintero-arenas', categoria: 'turismo-naturaleza', puntaje: 82 },
-    { nombre: 'Gastronomía Ocañera', slug: 'gastronomia-ocanera-patrimonio-inmaterial', categoria: 'gastronomia', puntaje: 0 },
+    { nombre: 'Santuario de Torcoroma', slug: 'santuario-de-nuestra-senora-de-las-gracias-de-torcoroma', categorias: ['turismo-religioso'], puntaje: 100 },
+    { nombre: 'Columna Libertad de los Esclavos', slug: 'columna-de-la-libertad-de-los-esclavos', categorias: ['turismo-historico'], puntaje: 90 },
+    { nombre: 'Reserva Natural ProAves Torcoroma', slug: 'reserva-natural-proaves-hormiguero-de-torcoroma', categorias: ['turismo-naturaleza'], puntaje: 85 },
+    { nombre: 'Complejo Histórico Gran Convención', slug: 'complejo-historico-de-la-gran-convencion', categorias: ['turismo-historico'], puntaje: 87 },
+    { nombre: 'Jardín Botánico UFPSO', slug: 'jardin-botanico-jorge-enrique-quintero-arenas', categorias: ['turismo-naturaleza'], puntaje: 82 },
+    { nombre: 'Gastronomía Ocañera', slug: 'gastronomia-ocanera-patrimonio-inmaterial', categorias: ['gastronomia'], puntaje: 0 },
   ]
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

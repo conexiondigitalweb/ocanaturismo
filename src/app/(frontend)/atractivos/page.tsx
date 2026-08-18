@@ -27,7 +27,7 @@ async function getAtractivos(cat?: string) {
   try {
     const payload = await getPayloadClient()
     const where: Where = cat
-      ? { and: [{ estado: { equals: 'publicado' } }, { categoria: { equals: cat } }] }
+      ? { and: [{ estado: { equals: 'publicado' } }, { categorias: { contains: cat } }] }
       : { estado: { equals: 'publicado' } }
     const result = await payload.find({
       collection: 'atractivos',
@@ -85,7 +85,7 @@ export default async function AtractivosPage({ searchParams }: Props) {
                   key={a.id}
                   nombre={a.nombre}
                   slug={a.slug}
-                  categoria={a.categoria}
+                  categorias={a.categorias || []}
                   puntaje={a.puntaje || undefined}
                   imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />

@@ -12,7 +12,7 @@ export const Atractivos: CollectionConfig = {
   slug: 'atractivos',
   admin: {
     useAsTitle: 'nombre',
-    defaultColumns: ['nombre', 'categoria', 'puntaje', 'destacado', 'estado'],
+    defaultColumns: ['nombre', 'categorias', 'puntaje', 'destacado', 'estado'],
     description: 'Atractivos turísticos del municipio de Ocaña',
   },
   access: {
@@ -62,8 +62,29 @@ export const Atractivos: CollectionConfig = {
     {
       name: 'categoria',
       type: 'select',
-      label: 'Categoría',
+      label: 'Categoría (legacy)',
       required: true,
+      admin: {
+        hidden: true,
+        description: 'Reemplazado por "categorias" (multi-selección). Se conserva oculto por ahora, no editar.',
+      },
+      options: [
+        { label: 'Turismo Religioso', value: 'turismo-religioso' },
+        { label: 'Turismo Histórico', value: 'turismo-historico' },
+        { label: 'Turismo de Naturaleza', value: 'turismo-naturaleza' },
+        { label: 'Cultura y Patrimonio', value: 'cultura-patrimonio' },
+        { label: 'Gastronomía', value: 'gastronomia' },
+      ],
+    },
+    {
+      name: 'categorias',
+      type: 'select',
+      label: 'Categorías',
+      hasMany: true,
+      required: true,
+      admin: {
+        description: 'Un atractivo puede pertenecer a varias categorías (ej: histórico y patrimonial a la vez).',
+      },
       options: [
         { label: 'Turismo Religioso', value: 'turismo-religioso' },
         { label: 'Turismo Histórico', value: 'turismo-historico' },

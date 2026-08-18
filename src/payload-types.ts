@@ -64,6 +64,7 @@ export interface Atractivo {
   nombre: string
   slug: string
   categoria: 'turismo-religioso' | 'turismo-historico' | 'turismo-naturaleza' | 'cultura-patrimonio' | 'gastronomia'
+  categorias: ('turismo-religioso' | 'turismo-historico' | 'turismo-naturaleza' | 'cultura-patrimonio' | 'gastronomia')[]
   descripcion?: Record<string, unknown> | null
   imagenPrincipal?: Media | string | null
   imagenes?: Array<{ imagen: Media | string; id?: string | null }> | null

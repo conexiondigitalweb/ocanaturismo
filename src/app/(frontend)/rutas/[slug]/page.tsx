@@ -91,7 +91,7 @@ export default async function RutaPage({ params }: Props) {
                   key={a.id}
                   nombre={a.nombre}
                   slug={a.slug}
-                  categoria={a.categoria}
+                  categorias={a.categorias || []}
                   puntaje={a.puntaje || undefined}
                   imagen={getMediaUrl(a.imagenPrincipal, 'card')}
                 />

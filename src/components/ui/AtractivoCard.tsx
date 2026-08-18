@@ -12,7 +12,7 @@ const categoryConfig: Record<string, { label: string; color: string }> = {
 interface AtractivoCardProps {
   nombre: string
   slug: string
-  categoria: string
+  categorias: string[]
   descripcionCorta?: string
   imagen?: string
   puntaje?: number
@@ -21,12 +21,14 @@ interface AtractivoCardProps {
 export default function AtractivoCard({
   nombre,
   slug,
-  categoria,
+  categorias,
   descripcionCorta,
   imagen,
   puntaje,
 }: AtractivoCardProps) {
-  const cat = categoryConfig[categoria] || { label: categoria, color: 'bg-gray-100 text-gray-800' }
+  const cats = categorias.map(
+    (categoria) => categoryConfig[categoria] || { label: categoria, color: 'bg-gray-100 text-gray-800' },
+  )
 
   return (
     <Link href={`/atractivos/${slug}`} className="group block">
@@ -56,7 +58,13 @@ export default function AtractivoCard({
 
         {/* Content */}
         <div className="p-4 flex flex-col flex-1">
-          <span className={`category-badge ${cat.color} self-start mb-2`}>{cat.label}</span>
+          <div className="flex flex-wrap gap-1 mb-2">
+            {cats.map((cat) => (
+              <span key={cat.label} className={`category-badge ${cat.color}`}>
+                {cat.label}
+              </span>
+            ))}
+          </div>
           <h3 className="font-display font-semibold text-gray-800 text-lg leading-tight group-hover:text-terracota-600 transition-colors">
             {nombre}
           </h3>

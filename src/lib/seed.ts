@@ -117,6 +117,7 @@ async function seedAtractivos(token: string) {
         nombre: a.nombre,
         slug,
         categoria: a.categoria,
+        categorias: [a.categoria],
         descripcion: richText(a.descripcion || ''),
         ubicacion: a.ubicacion,
         declaratoria: (a as { declaratoria?: string }).declaratoria,

@@ -8,7 +8,8 @@
     "start": "next start",
     "payload": "payload",
     "generate:types": "payload generate:types",
-    "seed": "tsx src/lib/seed.ts"
+    "seed": "tsx src/lib/seed.ts",
+    "migrate-categorias": "tsx src/lib/migrateCategorias.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.85.1",
