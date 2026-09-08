@@ -8,3 +8,8 @@ dist/
 
 .vercel
 .env*
+.claude/settings.local.json
+
+# Fotos originales sin procesar del mural (respaldo local, no usadas por
+# ninguna página — las versiones optimizadas viven en murales/encuentro-2026/)
+/public/murales/*.jpeg

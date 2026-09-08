@@ -45,6 +45,18 @@ const config: Config = {
           800: '#224324',
           900: '#1c3720',
         },
+        turquesa: {
+          50: '#eefcfb',
+          100: '#d3f6f3',
+          200: '#a8ede7',
+          300: '#72ddd5',
+          400: '#3fc3bb',
+          500: '#22a49d',
+          600: '#18827e',
+          700: '#186866',
+          800: '#175452',
+          900: '#164645',
+        },
       },
       fontFamily: {
         display: ['Playfair Display', 'serif'],
