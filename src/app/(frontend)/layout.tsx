@@ -1,7 +1,27 @@
 import type { Metadata } from 'next'
+import { Fraunces, Inter } from 'next/font/google'
 import '../globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+// Pareja tipográfica: Fraunces (display, serif cálida con carácter editorial/
+// colonial — conecta con Ocaña como ciudad histórica) + Inter (cuerpo, ya
+// usada en todo el sitio). Autohospedadas vía next/font — sin request extra
+// a Google Fonts en runtime.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  weight: ['300', '400', '500', '600'],
+  display: 'swap',
+})
 
 // Root layout del grupo de rutas (frontend). Payload usa su propio root
 // layout independiente en (payload)/admin/layout.tsx — por eso globals.css
@@ -29,7 +49,7 @@ export const metadata: Metadata = {
 
 export default function FrontendLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="antialiased">
         <Header />
         <main className="min-h-screen">{children}</main>
