@@ -5,6 +5,13 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    // categorias.ts arma clases de gradiente/color como strings (p.ej.
+    // 'from-dorado-200 via-dorado-300 to-dorado-500') que luego se
+    // interpolan en tiempo de ejecución. El escaneo de Tailwind es texto
+    // plano, no evalúa JS — necesita ver ese archivo para encontrar esos
+    // tokens; sin esta línea generaba CSS vacío para casi todas las
+    // categorías (texto blanco sobre fondo transparente = invisible).
+    './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
