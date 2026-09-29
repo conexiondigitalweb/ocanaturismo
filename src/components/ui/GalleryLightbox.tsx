@@ -9,6 +9,8 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 interface GalleryImage {
   src: string
   alt: string
+  width: number
+  height: number
 }
 
 /**
@@ -42,21 +44,24 @@ export default function GalleryLightbox({ images }: { images: GalleryImage[] }) 
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      {/* Columnas tipo masonry: cada foto conserva su proporción natural
+          (vertical, horizontal o cuadrada) en vez de forzar un recorte. */}
+      <div className="columns-2 sm:columns-3 gap-3">
         {images.map((img, i) => (
           <button
             key={i}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="group relative aspect-square rounded-xl overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-terracota-500"
+            className="group relative block w-full mb-3 break-inside-avoid rounded-xl overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-terracota-500"
             aria-label={`Ver imagen ampliada: ${img.alt}`}
           >
             <Image
               src={img.src}
               alt={img.alt}
-              fill
-              sizes="(min-width: 640px) 25vw, 50vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              width={img.width}
+              height={img.height}
+              sizes="(min-width: 640px) 33vw, 50vw"
+              className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
           </button>

@@ -46,6 +46,7 @@ export interface Media {
     thumbnail?: MediaSize | null
     card?: MediaSize | null
     hero?: MediaSize | null
+    heroLarge?: MediaSize | null
     gallery?: MediaSize | null
   }
 }

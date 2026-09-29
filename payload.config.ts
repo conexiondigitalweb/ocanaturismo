@@ -88,6 +88,12 @@ export default buildConfig({
               },
             },
             token: process.env.BLOB_READ_WRITE_TOKEN,
+            // Sube directo del navegador al Blob Store, sin pasar por la
+            // función serverless de Payload. Sin esto, una foto subida desde
+            // el panel en producción (fotos reales de cámara/dron, 8-12MB)
+            // choca con el límite de tamaño de body de las funciones de
+            // Vercel (4.5MB) antes de llegar siquiera a Payload.
+            clientUploads: true,
           }),
         ]
       : []),
