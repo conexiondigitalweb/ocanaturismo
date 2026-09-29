@@ -13,3 +13,7 @@ dist/
 # Fotos originales sin procesar del mural (respaldo local, no usadas por
 # ninguna página — las versiones optimizadas viven en murales/encuentro-2026/)
 /public/murales/*.jpeg
+
+# Fotos originales sin procesar/optimizar de atractivos (dron, cámara).
+# Respaldo local — solo lo optimizado y publicado vive en public/ o Blob.
+/fotos-originales/

@@ -56,8 +56,18 @@ export default async function AtractivoPage({ params }: Props) {
     (item): item is { imagen: Media; id?: string | null } => typeof item.imagen === 'object',
   )
   const galeriaImages = galeria
-    .map((item) => ({ src: getMediaUrl(item.imagen, 'gallery'), alt: item.imagen.alt || atractivo.nombre }))
-    .filter((img): img is { src: string; alt: string } => !!img.src)
+    .map((item) => {
+      const sizeData = item.imagen.sizes?.gallery
+      return {
+        src: getMediaUrl(item.imagen, 'gallery'),
+        alt: item.imagen.alt || atractivo.nombre,
+        // La variante `gallery` ya no recorta a cuadrado (ver Medios.ts) —
+        // width/height reales para que el grid respete la proporción natural.
+        width: sizeData?.width || item.imagen.width || 1200,
+        height: sizeData?.height || item.imagen.height || 1200,
+      }
+    })
+    .filter((img): img is { src: string; alt: string; width: number; height: number } => !!img.src)
 
   return (
     <>

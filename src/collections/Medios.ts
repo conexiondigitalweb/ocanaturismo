@@ -33,11 +33,15 @@ export const Medios: CollectionConfig = {
         position: 'centre',
       },
       {
-        // Galerías de fotos (Galerias, array "imagenes" de Atractivos)
+        // Hero grande sin recorte forzado — solo restringe el ancho,
+        // conserva la proporción natural de la foto (vertical u horizontal).
+        name: 'heroLarge',
+        width: 2400,
+      },
+      {
+        // Galerías de fotos — ya no fuerza cuadrado, conserva proporción natural
         name: 'gallery',
         width: 1200,
-        height: 1200,
-        position: 'centre',
       },
     ],
   },

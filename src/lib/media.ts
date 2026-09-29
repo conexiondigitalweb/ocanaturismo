@@ -1,6 +1,6 @@
 import type { Media } from '@/payload-types'
 
-type MediaSizeKey = 'thumbnail' | 'card' | 'hero' | 'gallery'
+type MediaSizeKey = 'thumbnail' | 'card' | 'hero' | 'heroLarge' | 'gallery'
 
 /**
  * Resuelve la URL pública de un campo `upload` de Payload. Los queries del
@@ -9,7 +9,7 @@ type MediaSizeKey = 'thumbnail' | 'card' | 'hero' | 'gallery'
  * vacío) esto también maneja el caso de solo-ID o `null`/`undefined`.
  *
  * `preferredSize` intenta primero el imageSize correspondiente (ver
- * Medios.ts: thumbnail/card/hero/gallery) y cae a la imagen original si ese
+ * Medios.ts: thumbnail/card/hero/heroLarge/gallery) y cae a la imagen original si ese
  * size no existe (por ejemplo, imágenes subidas antes de definir los
  * imageSizes, o archivos más pequeños que el size pedido).
  */

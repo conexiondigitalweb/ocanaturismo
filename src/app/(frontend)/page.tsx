@@ -60,12 +60,15 @@ export default async function HomePage() {
       <section className="relative min-h-[100svh] sm:min-h-[92vh] flex items-center sm:items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/murales/encuentro-2026/20-resultado-mural-terminado-1.jpeg"
-            alt="Mural terminado del Barrio Llano Chávez, Ocaña"
+            src="/catedral-hero.jpg"
+            alt="Catedral Santa Ana de Ocaña vista desde el parque principal"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            // object-position con sesgo hacia arriba: la foto original tiene
+            // mucho piso de la plaza y poco margen sobre la torre, así que un
+            // center parejo recorta la torre en heros anchos/bajos (desktop).
+            className="object-cover object-[center_20%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/60 to-gray-950/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-terracota-950/40 via-transparent to-bosque-950/30" />
